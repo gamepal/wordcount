@@ -16,7 +16,9 @@ def main():
     path = Path(args.path)
     text = path.read_text(encoding="utf-8")
     words = count_words(text)
+    minutes = estimate_reading_time(words)
     print(f"Words: {words}")
+    print(f"Reading time: {minutes} min")
 
 
 if __name__ == "__main__":
