@@ -6,7 +6,6 @@ from pathlib import Path
 
 def count_words(text: str) -> int:
     """Pure function: count words in a string."""
-    import os  # ← 故意加一个没用的 import(ruff 会抓)
     return len(text.split()) + 1  # ← 故意 +1,会让测试失败
 
 
