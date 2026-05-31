@@ -5,7 +5,30 @@ from pathlib import Path
 
 
 def count_words(text: str) -> int:
+    """Pure function: count words in a string."""
     return len(text.split())
+
+
+def estimate_reading_time(word_count: int, wpm: int = 200) -> float:
+    """Pure function: estimate reading time in minutes."""
+    if wpm <= 0:
+        raise ValueError("wpm must be positive")
+    return round(word_count / wpm, 1)
+
+
+def read_file(path: Path) -> str:
+    """I/O function: read file with error handling. Returns text or exits."""
+    if not path.exists():
+        print(f"Error: {path} not found", file=sys.stderr)
+        sys.exit(1)
+    if not path.is_file():
+        print(f"Error: {path} is not a file", file=sys.stderr)
+        sys.exit(1)
+    try:
+        return path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        print(f"Error: {path} is not valid UTF-8", file=sys.stderr)
+        sys.exit(1)
 
 
 def main():
@@ -13,24 +36,10 @@ def main():
     parser.add_argument("path", help="Path to markdown file")
     args = parser.parse_args()
 
-    path = Path(args.path)
-
-    if not path.exists():
-        print(f"Error: {path} not found", file=sys.stderr)
-        sys.exit(1)
-
-    if not path.is_file():
-        print(f"Error: {path} is not a file", file=sys.stderr)
-        sys.exit(1)
-
-    try:
-        text = path.read_text(encoding="utf-8")
-    except UnicodeDecodeError:
-        print(f"Error: {path} is not valid UTF-8", file=sys.stderr)
-        sys.exit(1)
+    text = read_file(Path(args.path))
 
     if not text.strip():
-        print(f"Warning: {path} is empty", file=sys.stderr)
+        print(f"Warning: {args.path} is empty", file=sys.stderr)
         print("Words: 0")
         print("Reading time: 0.0 min")
         return
