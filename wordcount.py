@@ -41,7 +41,7 @@ def process_file(path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="Count words in markdown files")
-    parser.add_argument("paths", nargs="+", help="One or more markdown files")
+    parser.add_argument("--file", "-f", action="append", required=True, help="Markdown file (can be specified multiple times)")
     args = parser.parse_args()
 
     total_words = 0
