@@ -1,7 +1,25 @@
 # tests/test_wordcount.py
 import pytest
 from wordcount import count_words, estimate_reading_time
+from pathlib import Path
+from wordcount import read_file
 
+def test_read_file_ok(tmp_path: Path):
+    f = tmp_path / "sample.md"
+    f.write_text("hello world", encoding="utf-8")
+    assert read_file(f) == "hello world"
+
+
+def test_read_file_missing(tmp_path: Path):
+    with pytest.raises(SystemExit) as exc:
+        read_file(tmp_path / "does_not_exist.md")
+    assert exc.value.code == 1
+
+
+def test_read_file_directory(tmp_path: Path):
+    with pytest.raises(SystemExit) as exc:
+        read_file(tmp_path)  # 传一个目录而不是文件
+    assert exc.value.code == 1
 
 # count_words 的测试
 def test_count_words_basic():
