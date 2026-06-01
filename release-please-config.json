@@ -1,0 +1,12 @@
+{
+  "release-type": "python",
+  "packages": {
+    ".": {
+      "package-name": "wordcount",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": false,
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": false
+    }
+  }
+}
