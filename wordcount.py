@@ -30,24 +30,31 @@ def read_file(path: Path) -> str:
         print(f"Error: {path} is not valid UTF-8", file=sys.stderr)
         sys.exit(1)
 
-
-def main():
-    parser = argparse.ArgumentParser(description="Count words in a markdown file")
-    parser.add_argument("path", help="Path to markdown file")
-    args = parser.parse_args()
-
-    text = read_file(Path(args.path))
-
-    if not text.strip():
-        print(f"Warning: {args.path} is empty", file=sys.stderr)
-        print("Words: 0")
-        print("Reading time: 0.0 min")
-        return
-
+def process_file(path: Path):
+    if not path.exists():
+        print(f"Error: {path} not found", file=sys.stderr)
+        return None
+    text = path.read_text(encoding="utf-8")
     words = count_words(text)
     minutes = estimate_reading_time(words)
-    print(f"Words: {words}")
-    print(f"Reading time: {minutes} min")
+    return words, minutes
+
+def main():
+    parser = argparse.ArgumentParser(description="Count words in markdown files")
+    parser.add_argument("paths", nargs="+", help="One or more markdown files")
+    args = parser.parse_args()
+
+    total_words = 0
+    for p in args.paths:
+        result = process_file(Path(p))
+        if result is None:
+            continue
+        words, minutes = result
+        print(f"{p}: {words} words, {minutes} min")
+        total_words += words
+
+    if len(args.paths) > 1:
+        print(f"Total: {total_words} words")
 
 
 if __name__ == "__main__":
