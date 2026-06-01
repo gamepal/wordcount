@@ -6,7 +6,7 @@ from pathlib import Path
 
 def count_words(text: str) -> int:
     """Pure function: count words in a string."""
-    return len(text.split())
+    return len(text.split())  # ← 故意 +1,会让测试失败
 
 
 def estimate_reading_time(word_count: int, wpm: int = 200) -> float:
