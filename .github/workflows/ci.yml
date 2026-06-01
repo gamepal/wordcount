@@ -3,8 +3,12 @@ name: CI
 on:
   pull_request:
     branches: [main, "release-please--**"]
+  pull_request_target:
+    branches: [main, "release-please--**"]
+    types: [opened, synchronize, reopened]
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -12,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
