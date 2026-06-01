@@ -34,7 +34,7 @@ def process_file(path: Path):
     if not path.exists():
         print(f"Error: {path} not found", file=sys.stderr)
         return None
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8-sig")
     words = count_words(text)
     minutes = estimate_reading_time(words)
     return words, minutes
