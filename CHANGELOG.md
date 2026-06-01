@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.0](https://github.com/gamepal/wordcount/compare/v0.4.0...v0.5.0) (2026-06-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename positional arg to --file flag ([#19](https://github.com/gamepal/wordcount/issues/19))
+
+### Features
+
+* rename positional arg to --file flag ([#19](https://github.com/gamepal/wordcount/issues/19)) ([4ea1cdd](https://github.com/gamepal/wordcount/commit/4ea1cddb701f45f43d64f8887529d9a8a2f00de0))
+
 ## [0.4.0](https://github.com/gamepal/wordcount/compare/v0.3.0...v0.4.0) (2026-06-01)
 
 
